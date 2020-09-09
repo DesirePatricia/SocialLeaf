@@ -15,7 +15,7 @@ import { Header, withTheme } from 'react-native-elements';
 
 const HomeScreen = (props) => {
   return (
-      <View style = {{flex:1}}>
+      <View style = {{flex:1, backgroundColor: 'white'}}>
       <Header
           centerComponent={{ text: 'SocialLeaf', style: styles.leafTitle }}
           containerStyle={{
