@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet,Button, ScrollView, KeyboardAvoidingView, Keyboard, View, TouchableWithoutFeedback, Text, TouchableOpacity, Image, TextInput} from 'react-native';
+import {StyleSheet, ScrollView, View, Text, TouchableOpacity, Image, } from 'react-native';
 import {Navigation} from 'react-native-navigation';
 import CameraRoll from "@react-native-community/cameraroll";
 
@@ -12,7 +12,7 @@ export default class NewPostScreen extends React.Component {
     this.state = {
        photos: [],
        selected: false,
-       imageKey: '',
+       imageKey: 0,
     }
  }
  toggleSelect(i){
@@ -21,6 +21,7 @@ export default class NewPostScreen extends React.Component {
     selected:!this.state.selected
   }): this.setState({
     selected: true,
+    imageKey: i,
   })
 }}
  componentDidMount(){
@@ -63,8 +64,18 @@ export default class NewPostScreen extends React.Component {
           })}
           </View>
           </ScrollView>
-          <View >
-          <TouchableOpacity style = {styles.leafBorder}>
+          <View>
+          <TouchableOpacity style = {styles.leafBorder}
+          onPress={() => {
+            Navigation.push(this.props.componentId, {
+              component: {
+                name: "SelectedPicture",
+                passProps: {
+                  imageURI: this.state.photos[this.state.imageKey].node.image.uri,
+                }
+                }
+               })
+          }} >
              <Text style = {styles.leafTitle}>next</Text>
           </TouchableOpacity>
           </View>
@@ -75,10 +86,10 @@ export default class NewPostScreen extends React.Component {
 
     const styles = StyleSheet.create({
       leafBorder:{
-        margin: 55,
+        margin: '10%',
         height: 50,
-        width: 260,
-        borderColor: '#246F42',
+        width: '80%',
+        borderColor: 'rgba(36, 111, 66, 0.3)',
         borderWidth: 1,
         borderStyle: 'solid',
         bottom: 0,
@@ -86,7 +97,7 @@ export default class NewPostScreen extends React.Component {
 
       leafTitle:{
         color: '#246F42', 
-        fontFamily:'Rancho-Regular', 
+        fontFamily:'Rakkas-Regular', 
         fontSize: 32, 
         textAlign: "center",
         alignItems: "center",

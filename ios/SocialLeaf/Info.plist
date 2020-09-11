@@ -73,6 +73,10 @@
 		<string>Zocial.ttf</string>
 		<string>Cabin-Regular.ttf</string>
 		<string>Rancho-Regular.ttf</string>
+		<string>Rakkas-Regular.ttf</string>
+		<string>NotoSans-Regular.ttf</string>
+		<string>NotoSans.ttf</string>
+		<string>NotoSansTC-Regular.otf</string>
 	</array>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Will use images to post on profile and share with others</string>

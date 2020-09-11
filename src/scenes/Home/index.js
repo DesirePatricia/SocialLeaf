@@ -13,7 +13,36 @@ import { Navigation } from 'react-native-navigation';
 import { Header, withTheme } from 'react-native-elements';
 
 
-const HomeScreen = (props) => {
+export default class HomeScreen extends React.Component {
+  constructor(props){
+    super(props);
+  
+  this.state = {
+    imageURI: '',
+    title: '',
+    description: '',
+    submitted: false,
+  }
+  }
+
+  componentDidMount(){
+    {this.props.imageURI != undefined ? this.setState({
+      imageURI: this.props.imageURI,
+      submitted: true
+    }): null}
+    {this.props.title != undefined ? this.setState({
+      title: this.props.title
+    }): null}
+    {this.props.description != undefined ? this.setState({
+      description: this.props.description
+    }): null}
+  }
+
+
+  render(){
+    console.log(this.props.imageURI)
+    console.log(this.props.title)
+    console.log(this.props.description)
   return (
       <View style = {{flex:1, backgroundColor: 'white'}}>
       <Header
@@ -28,10 +57,25 @@ const HomeScreen = (props) => {
           
       </Header>
         <ScrollView contentContainerStyle = {{flexGrow: 1 }}>
+          {this.state.submitted ? 
+          <View style={{width:'100%', height: 400, 
+          padding: '5%'}}>
+            <View>
+              <Text style = {styles.plantTitle}>{this.state.title}</Text>
+              <Text style = {styles.plantDescription}>{this.state.description}</Text>
+            </View>
+            <Image source = {{uri: this.state.imageURI}}
+            style={{width:'100%', borderColor: '#CBCACA',
+            borderStyle: 'solid',
+            borderBottomWidth:1,
+            height: 300}}/>
+          </View>
+          :null}
+
           <View style ={styles.bottom}>
           <TouchableOpacity style = {styles.button}
           onPress={() => {
-            Navigation.push(props.componentId, {
+            Navigation.push(this.props.componentId, {
             component: {
               name: "NewPost",
               }
@@ -43,17 +87,15 @@ const HomeScreen = (props) => {
         </ScrollView>
         </View>
   );
-};
-
-
-export default HomeScreen;
+}
+}
 
 const styles = StyleSheet.create({
 
   leafTitle:{
     color: 'white', 
-    fontFamily:'Rancho-Regular', 
-    fontSize: 48, 
+    fontFamily:'Rakkas-Regular', 
+    fontSize: 34, 
     marginRight:20
   },
 
@@ -66,6 +108,22 @@ const styles = StyleSheet.create({
     transform: [
       { scaleX: -1 }
     ]
+  },
+
+  plantTitle:{
+    fontSize: 28, 
+    textAlign: "center",
+    fontFamily:'Rakkas-Regular', 
+    textTransform: 'lowercase',
+  },
+
+  plantDescription:{
+    top:0,
+    width: '85%',
+    marginLeft:'7.5%',
+    marginBottom: '2%',
+    fontFamily: 'NotoSansTC-Regular',
+    color: '#6F6F6F'
   },
 
   button:{
