@@ -11,6 +11,10 @@ import {
 } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import { Header, withTheme } from 'react-native-elements';
+import * as login from '../../login.js'
+import Auth0 from 'react-native-auth0';
+let auth0 = new Auth0({ domain: 'https://social-leaf.us.auth0.com', clientId: 'XLescsqcFAa3jutIeeFfXQPIYdS39vEf' });
+
 
 
 export default class HomeScreen extends React.Component {
@@ -26,6 +30,14 @@ export default class HomeScreen extends React.Component {
   }
 
   componentDidMount(){
+      auth0
+          .webAuth
+          .authorize({scope: 'openid profile email'})
+          .then(credentials =>
+            this.setState({ accessToken: credentials.accessToken }),
+          )
+          .catch(error => console.log(error))
+    
     {this.props.imageURI != undefined ? this.setState({
       imageURI: this.props.imageURI,
       submitted: true
@@ -40,9 +52,7 @@ export default class HomeScreen extends React.Component {
 
 
   render(){
-    console.log(this.props.imageURI)
-    console.log(this.props.title)
-    console.log(this.props.description)
+
   return (
       <View style = {{flex:1, backgroundColor: 'white'}}>
       <Header
@@ -65,9 +75,7 @@ export default class HomeScreen extends React.Component {
               <Text style = {styles.plantDescription}>{this.state.description}</Text>
             </View>
             <Image source = {{uri: this.state.imageURI}}
-            style={{width:'100%', borderColor: '#CBCACA',
-            borderStyle: 'solid',
-            borderBottomWidth:1,
+            style={{width:'100%',
             height: 300}}/>
           </View>
           :null}

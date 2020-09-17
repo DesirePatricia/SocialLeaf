@@ -23,6 +23,7 @@ export default class NewPostScreen extends React.Component {
     selected: true,
     imageKey: i,
   })
+  
 }}
  componentDidMount(){
   CameraRoll.getPhotos({
@@ -72,6 +73,7 @@ export default class NewPostScreen extends React.Component {
                 name: "SelectedPicture",
                 passProps: {
                   imageURI: this.state.photos[this.state.imageKey].node.image.uri,
+                  imageName: this.state.photos[this.state.imageKey].node.image.filename,
                 }
                 }
                })

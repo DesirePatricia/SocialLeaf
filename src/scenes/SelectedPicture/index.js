@@ -3,6 +3,7 @@ import {StyleSheet, ScrollView, View, Text, TextInput, TouchableOpacity, Image, 
 import {Navigation} from 'react-native-navigation';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import CameraRoll from "@react-native-community/cameraroll";
+import { RNS3 } from 'react-native-aws3';
 
 
 export default class SelectedPictureScreen extends React.Component {
@@ -11,14 +12,37 @@ export default class SelectedPictureScreen extends React.Component {
   
     this.state = {
         imageURI: this.props.imageURI,
+        imageName: this.props.imageName,
         title: '',
         description: '',
     }
     }
     
+      uploadToStorage(){
+        const file = {
+          uri: this.state.imageURI,
+          name: this.state.imageName,
+          type:  'image/jpeg'
+        }
+        console.log(file);
+
+        const config = {
+          keyPrefix: 's3/',
+          bucket: 'social-leaf-post',
+          region: 'us-east-2',
+          accessKey: 'AKIATO7GRWGCVCOCFU4M',
+          secretKey: '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',
+          successActionStatus: 201
+        }
+
+        RNS3.put(file, config)
+        .then((response) => {
+          console.log(response)
+        })
+
+      }
 
       render(){
-
       return(
         <KeyboardAwareScrollView style= {{flex: 1, backgroundColor:'white'}}>
         <View >
@@ -36,6 +60,7 @@ export default class SelectedPictureScreen extends React.Component {
             <View>
           <TouchableOpacity style = {styles.leafBorder}
             onPress={() => {
+             this.uploadToStorage()
             Navigation.push(this.props.componentId, {
               component: {
                 name: "Home",
@@ -46,6 +71,8 @@ export default class SelectedPictureScreen extends React.Component {
                 }
                 }
                })
+
+               
           }} >
              <Text style = {styles.leafTitle}>submit</Text>
           </TouchableOpacity>
