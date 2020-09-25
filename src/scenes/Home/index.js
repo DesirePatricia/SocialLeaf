@@ -11,9 +11,10 @@ import {
 } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import { Header, withTheme } from 'react-native-elements';
+import * as variables from '../../assets/variables/variables.js'
 import * as login from '../../login.js'
 import Auth0 from 'react-native-auth0';
-let auth0 = new Auth0({ domain: 'https://social-leaf.us.auth0.com', clientId: 'XLescsqcFAa3jutIeeFfXQPIYdS39vEf' });
+let auth0 = new Auth0({ domain: variables.domain, clientId: variables.clientId});
 
 
 

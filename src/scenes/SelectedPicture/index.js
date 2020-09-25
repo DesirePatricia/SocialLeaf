@@ -4,6 +4,7 @@ import {Navigation} from 'react-native-navigation';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import CameraRoll from "@react-native-community/cameraroll";
 import { RNS3 } from 'react-native-aws3';
+import * as variables from '../../assets/variables/variables.js';
 
 
 export default class SelectedPictureScreen extends React.Component {
@@ -27,11 +28,11 @@ export default class SelectedPictureScreen extends React.Component {
         console.log(file);
 
         const config = {
-          keyPrefix: 's3/',
-          bucket: 'social-leaf-post',
-          region: 'us-east-2',
-          accessKey: 'AKIATO7GRWGCVCOCFU4M',
-          secretKey: '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',
+          keyPrefix: variables.keyPrefix,
+          bucket: variables.bucket,
+          region: variables.region,
+          accessKey: variables.accessKey,
+          secretKey: variables.secretKey,
           successActionStatus: 201
         }
 
