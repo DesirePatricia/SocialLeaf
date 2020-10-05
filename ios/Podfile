@@ -8,6 +8,8 @@ target 'SocialLeaf' do
 
   use_react_native!(:path => config["reactNativePath"])
 
+  pod 'react-native-pure-jwt', :path => '../node_modules/react-native-pure-jwt'
+
   target 'SocialLeafTests' do
     inherit! :complete
     # Pods for testing

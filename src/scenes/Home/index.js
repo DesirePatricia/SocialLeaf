@@ -12,8 +12,8 @@ import {
 import { Navigation } from 'react-native-navigation';
 import { Header, withTheme } from 'react-native-elements';
 import * as variables from '../../assets/variables/variables.js'
-import * as login from '../../login.js'
 import Auth0 from 'react-native-auth0';
+import * as JWT from 'jwt-simple';
 let auth0 = new Auth0({ domain: variables.domain, clientId: variables.clientId});
 
 
@@ -27,18 +27,21 @@ export default class HomeScreen extends React.Component {
     title: '',
     description: '',
     submitted: false,
+    accessToken: '',
+    idToken: '',
   }
   }
 
   componentDidMount(){
+    
       auth0
           .webAuth
           .authorize({scope: 'openid profile email'})
           .then(credentials =>
-            this.setState({ accessToken: credentials.accessToken }),
+            this.setState({accessToken: credentials.accessToken, idToken: credentials.idToken})
           )
           .catch(error => console.log(error))
-    
+          
     {this.props.imageURI != undefined ? this.setState({
       imageURI: this.props.imageURI,
       submitted: true
@@ -53,7 +56,8 @@ export default class HomeScreen extends React.Component {
 
 
   render(){
-
+    console.log(this.state.accessToken)
+    console.log(this.state.idToken)
   return (
       <View style = {{flex:1, backgroundColor: 'white'}}>
       <Header
