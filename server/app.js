@@ -7,7 +7,7 @@ require('./User')
 app.use(bodyParser.json())
 
 const User = mongoose.model("user")
-const mongoUri = 'mongodb+srv://admin-des:akglubLnTcG5WSEp@social-leaf-cluster.cb4sl.mongodb.net/user_info?retryWrites=true&w=majority'
+
 
 mongoose.connect(mongoUri,{
     useNewUrlParser:true,
@@ -24,8 +24,14 @@ app.get('/', (req,res) => {
     res.send("welcome to node js")
 })
 
-app.post('/send', (req, res)=>{
-    console.log(req.body)
+app.post('/senddata', (req, res)=>{
+    const user = new User({
+        user_id:req.body.user_id,
+        email:req.body.email,
+        family_name:req.body.family_name,
+        given_name:req.body.given_name,
+
+    })
     res.send("posted")
 })
 

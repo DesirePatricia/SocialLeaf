@@ -76,3 +76,4 @@ amplifytools.xcconfig
 
 #variables 
 src/assets/variables/variables.js
+*.env
