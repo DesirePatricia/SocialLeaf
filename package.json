@@ -28,7 +28,7 @@
     "mongoose": "^5.10.7",
     "nodejs-mobile-react-native": "^0.6.1",
     "react": "16.13.1",
-    "react-native": "0.63.2",
+    "react-native": "^0.63.3",
     "react-native-auth0": "^2.6.0",
     "react-native-aws3": "^0.0.9",
     "react-native-elements": "^2.3.1",
