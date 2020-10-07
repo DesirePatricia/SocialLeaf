@@ -1,0 +1,17 @@
+{
+  "projectName": "socialleaf",
+  "version": "3.0",
+  "frontend": "javascript",
+  "javascript": {
+    "framework": "react-native",
+    "config": {
+      "SourceDir": "/",
+      "DistributionDir": "/",
+      "BuildCommand": "react-native run-ios",
+      "StartCommand": "yarn start"
+    }
+  },
+  "providers": [
+    "awscloudformation"
+  ]
+}

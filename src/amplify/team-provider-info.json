@@ -1,0 +1,15 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-socialleaf-dev-152128-authRole",
+      "UnauthRoleArn": "arn:aws:iam::448874431040:role/amplify-socialleaf-dev-152128-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::448874431040:role/amplify-socialleaf-dev-152128-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-socialleaf-dev-152128-deployment",
+      "UnauthRoleName": "amplify-socialleaf-dev-152128-unauthRole",
+      "StackName": "amplify-socialleaf-dev-152128",
+      "StackId": "arn:aws:cloudformation:us-east-1:448874431040:stack/amplify-socialleaf-dev-152128/234897e0-0809-11eb-b306-12c5c4f78283",
+      "AmplifyAppId": "d3pvj4lv95k0z1"
+    }
+  }
+}

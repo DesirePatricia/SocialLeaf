@@ -13,10 +13,33 @@ import { Navigation } from 'react-native-navigation';
 import { Header, withTheme } from 'react-native-elements';
 import * as variables from '../../assets/variables/variables.js'
 import Auth0 from 'react-native-auth0';
-import * as JWT from 'jwt-simple';
+global.Buffer = global.Buffer || require('buffer').Buffer
 let auth0 = new Auth0({ domain: variables.domain, clientId: variables.clientId});
 
 
+  var given_name = ''
+  var family_name = ''
+  var email = ''
+  var user_id =  ''
+
+const submitData = () =>{
+  fetch("http://ece9b4d290d8.ngrok.io/send-data",{
+    method:"POST",
+    headers:{
+      'Content-Type' : 'application/json'
+    },
+    body:JSON.stringify({
+      given_name: given_name ,
+      family_name: family_name,
+      email: email,
+      user_id: user_id,
+    })
+  })
+  .then(res => res.json())
+  .then(data =>{
+      console.log(data)
+  })
+}
 
 export default class HomeScreen extends React.Component {
   constructor(props){
@@ -29,8 +52,10 @@ export default class HomeScreen extends React.Component {
     submitted: false,
     accessToken: '',
     idToken: '',
+    
   }
   }
+
 
   componentDidMount(){
     
@@ -56,8 +81,18 @@ export default class HomeScreen extends React.Component {
 
 
   render(){
-    console.log(this.state.accessToken)
-    console.log(this.state.idToken)
+    if(this.state.idToken !== '' && this.state.idToken !== undefined){
+      let base64Url = this.state.idToken.split('.')[1]; // token you get
+      let base64 = base64Url.replace('-', '+').replace('_', '/');
+      let decoded = JSON.parse(Buffer.from(base64, 'base64').toString('binary'));
+      console.log(decoded)
+      given_name = decoded["given_name"]
+      family_name = decoded["family_name"]
+      email = decoded["email"]
+      user_id = decoded["sub"]
+      submitData()
+      
+    }
   return (
       <View style = {{flex:1, backgroundColor: 'white'}}>
       <Header
