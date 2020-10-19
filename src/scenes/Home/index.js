@@ -15,7 +15,12 @@ import * as variables from '../../assets/variables/variables.js'
 import Auth0 from 'react-native-auth0';
 global.Buffer = global.Buffer || require('buffer').Buffer
 let auth0 = new Auth0({ domain: variables.domain, clientId: variables.clientId});
+import { ApolloClient, InMemoryCache, gql, ApolloProvider } from '@apollo/client';
 
+const client = new ApolloClient({
+  cache: new InMemoryCache(),
+  uri: 'http://localhost:4000/graphql',
+});
 
   var given_name = ''
   var family_name = ''
@@ -94,6 +99,7 @@ export default class HomeScreen extends React.Component {
       
     }
   return (
+      <ApolloProvider>
       <View style = {{flex:1, backgroundColor: 'white'}}>
       <Header
           centerComponent={{ text: 'SocialLeaf', style: styles.leafTitle }}
@@ -134,6 +140,7 @@ export default class HomeScreen extends React.Component {
           </View>
         </ScrollView>
         </View>
+        </ApolloProvider>
   );
 }
 }
