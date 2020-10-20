@@ -1,15 +1,14 @@
 const express = require('express')
-const app = express()
-var { graphqlHTTP } = require('express-graphql');
-var { buildSchema } = require('graphql');
+const { ApolloServer, gql } = require('apollo-server');
 const {PORT = 3000} = process.env
 const mongoose = require('mongoose')
 require('./User')
 require('dotenv').config();
 
-var schema = buildSchema(`
+const typeDefs = gql`
   type Query {
-    hello: String
+    signedIn: Boolean
+    me:[User]
   }
 
   type User {
@@ -17,17 +16,20 @@ var schema = buildSchema(`
     email: String!
     given_name: String
     family_name: String
+    posts:[Post]
 
   }
-`);
+  type Post {
+    uri: String
+    title: String
+    description: String
+  }
+`;
 
+const server = new ApolloServer({
+    typeDefs,
+  });
 
-app.use('/graphql', graphqlHTTP({
-    schema: schema,
-    graphiql: true,
-  }));
-
-const User = mongoose.model("user")
 
 
 mongoose.connect(process.env.MONGO_URI,{
@@ -44,6 +46,6 @@ mongoose.connection.on("error",(err) =>{
 })
 
 
-app.listen(PORT, () => {
+server.listen().then(({ url })=> {
     console.log("server running")
 })

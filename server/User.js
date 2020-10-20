@@ -6,7 +6,15 @@ const UserSchema = new mongoose.Schema({
     family_name:String,
     given_name:String,
     followers:Array,
-    following:Array
+    following:Array,
+    posts:[{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }],
 })
 
-mongoose.model("user", UserSchema)
+var PostSchema = new mongoose.Schema({
+    uri:String,
+    title: String,
+    description: String
+  });
+
+mongoose.model("User", UserSchema)
+mongoose.model("Post", PostSchema)
