@@ -1,33 +1,38 @@
 const express = require('express')
-const { ApolloServer, gql } = require('apollo-server');
+const { ApolloServer} = require('apollo-server');
 const {PORT = 3000} = process.env
 const mongoose = require('mongoose')
-require('./User')
+const { MongoDataSource } = require('apollo-datasource-mongodb')
+const { MongoClient } = require ('mongodb')
+const client = new MongoClient('mongodb://localhost:27017/test')
+const typeDefs = require('./src/typeDefs')
+const resolvers = require('./src/resolvers')
+client.connect()
+require('./src/User')
 require('dotenv').config();
 
-const typeDefs = gql`
-  type Query {
-    signedIn: Boolean
-    me:[User]
-  }
 
-  type User {
-    user_id: String!
-    email: String!
-    given_name: String
-    family_name: String
-    posts:[Post]
+class Users extends MongoDataSource {
+    getUser(user_id) {
+      return this.findOneById(user_id)
+    }
+  }
+  
+  class Posts extends MongoDataSource {
+    getPost(uri) {
+      return this.findOneById(uri)
+    }
+  }
+  
 
-  }
-  type Post {
-    uri: String
-    title: String
-    description: String
-  }
-`;
 
 const server = new ApolloServer({
     typeDefs,
+    resolvers,
+    dataSources: () => ({
+        users: new Users(db.collection('users')),
+        posts: new Posts(db.collection('posts'))
+    })
   });
 
 

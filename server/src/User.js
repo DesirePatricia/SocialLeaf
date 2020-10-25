@@ -7,13 +7,13 @@ const UserSchema = new mongoose.Schema({
     given_name:String,
     followers:Array,
     following:Array,
-    posts:[{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }],
 })
 
 var PostSchema = new mongoose.Schema({
     uri:String,
     title: String,
-    description: String
+    description: String,
+    user_id: String,
   });
 
 mongoose.model("User", UserSchema)
